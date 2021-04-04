@@ -3,6 +3,8 @@
 Terraform modules to deploy resources on deploy on Azure cloud with its possible configurations.
 These modules deploy bunch of resources with all required configurations considering monitoring, availability and reliability.    
 
+- **Terraform version** >= `0.14`
+
 ## Base Modules
 
 - [terraform-azure-base-modules](https://github.com/cloudops92/terraform-azure-base-modules)
@@ -47,109 +49,6 @@ Terraform directory hold the various modules code.
     |-- variables.tf
     `-- virtual_network.tf
 ```
-
-Values directory store the terraform values in path `subscriptions -> resource-group -> region -> module -> {profile}.tfvars`
-
-```
-values/
-`-- ms-azure-sponsorship
-    `-- dev
-        `-- eastus
-            |-- resource-group
-            |   `-- my-dev-rg.tfvars
-
-```
-
-### Terraform state info
-
-- ResourceGroupName: `terraform-rg`
-- StorageAccountName: `tfstate`
-- Environment: `public`
-- ContainerName: `terraform-azure-deploy`
-- STATE_PATH: `$(ACCOUNT)/$(RESOURCE_GROUP)/$(LOCATION)/$(MODULE)/$(DEPLOYMENT)/terraform.tfstate`
-
-
-### Make Targets
-
-With each `make` target below input is mandatory.
-
-- `ACCOUNT`: Name of the aws account.
-- `CUSTOMER`: Name of the customer.
-- `ENV`: Environment to deploy.
-- `Location`: Azure region/location.
-- `MODULE`: Name of the module to deploy.
-- `DEPLOYMENT`: Name of the deployment to deploy.
-
-Make sure you have that environment following directory structure.
-
-#### Targets
-
-- `$ make init`  
-
-    Running `terraform init...` to initialize terraform. 
-    
-- `$ make validate`  
-
-    Running `terraform validate...` to validate the Terraform syntax.
-
-- `$ make plan`  
-
-    Running `terraform plan...` to print the plan. 
-
-- `$ make plan-destroy`
-
-  Running `terraform plan -destroy...` to print the plan for removing resources.
-
-- `$ make apply`  
-
-    Running `terraform apply...` to execute deployment. 
-
-- `$ make apply-plan`
-
-  Running `terraform apply...` with plan.
-
-- `$ make destroy`  
-
-    Running `terraform destroy` to destroy the deployment. 
-
-#### Examples
-
-```
-$ make init ACCOUNT=ms-azure-sponsorship CUSTOMER=customer ENV=dev LOCATION=eastus MODULE=resource-group DEPLOYMENT=dev
-$ make validate ACCOUNT=ms-azure-sponsorship CUSTOMER=customer ENV=dev LOCATION=eastus MODULE=resource-group DEPLOYMENT=dev
-$ make plan ACCOUNT=ms-azure-sponsorship CUSTOMER=customer ENV=dev LOCATION=eastus MODULE=resource-group DEPLOYMENT=dev
-$ make apply ACCOUNT=ms-azure-sponsorship CUSTOMER=customer ENV=dev LOCATION=eastus MODULE=resource-group DEPLOYMENT=dev
-$ make destroy ACCOUNT=ms-azure-sponsorship CUSTOMER=customer ENV=dev LOCATION=eastus MODULE=resource-group DEPLOYMENT=dev
-```
-
-### How to init git-crypt?
-
-1. Execute `$ git-crypt init`.
-2. Add the `.gitattributes` file. Rule will work for child files and folders.
-3. Define the file-type to encrypt.
-    ```
-    *.crt filter=git-crypt diff=git-crypt
-    *.key filter=git-crypt diff=git-crypt
-    ```
-
-### How to add GPG user into git-crypt?
-
-1. Get the key `$ gpg --list-keys`
-
-```
-/Users/someuser/.gnupg/pubring.kbx
-----------------------------------
-pub rsa2048 2019-01-07 [SC] [expires: 2021-01-06]
-    D2B3EAAF9A8D5DB93CC30B26CCA243599CC80727B
-uid           [ultimate] Your Name <your@email.com>
-sub   rsa2048 2019-01-07 [E] [expires: 2021-01-06]
-```
-
-2. Add user `$ git-crypt add-gpg-user D2B3EAAF9A8D5DB93CC30B26CCA243599CC80727B`.
-
-3. To unlock, execute `$ git-crypt unlock`
-
-4. To lock, execute `$ git-crypt lock`
 
 
 ## Overview
