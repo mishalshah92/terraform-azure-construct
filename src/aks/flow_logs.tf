@@ -1,5 +1,5 @@
 module "nsg-flow-logs" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-watcher-flow-log?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-watcher-flow-log?ref=0.1"
 
   network_watcher_name = data.azurerm_network_watcher.network_watcher.name
   resource_group       = data.azurerm_network_watcher.network_watcher.resource_group_name

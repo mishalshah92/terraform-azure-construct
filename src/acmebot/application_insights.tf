@@ -1,5 +1,5 @@
 module "application_insights" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/application-insights?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/application-insights?ref=0.1"
 
   name             = local.app_insights_name
   location         = var.location

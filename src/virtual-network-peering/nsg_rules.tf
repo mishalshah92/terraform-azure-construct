@@ -1,5 +1,5 @@
 module "nsg_rules" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-security-group-rules?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-security-group-rules?ref=0.1"
 
   for_each = var.nsg_rules
 

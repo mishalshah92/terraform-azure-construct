@@ -1,5 +1,5 @@
 module "requester_virtual-network-peering" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/virtual-network-peering?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/virtual-network-peering?ref=0.1"
 
   name                 = var.name
   resource_group       = var.requester_vnet_resource_group_name
@@ -15,7 +15,7 @@ module "requester_virtual-network-peering" {
 }
 
 module "acceptor_virtual-network-peering" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/virtual-network-peering?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/virtual-network-peering?ref=0.1"
 
   name                 = var.name
   resource_group       = var.acceptor_vnet_resource_group_name

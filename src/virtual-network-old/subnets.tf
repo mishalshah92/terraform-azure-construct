@@ -1,5 +1,5 @@
 module "subnet" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/subnet?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/subnet?ref=0.1"
 
   count = length(var.subnet_address_spaces)
 

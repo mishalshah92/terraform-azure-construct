@@ -1,5 +1,5 @@
 module "function_app" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/function-app?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/function-app?ref=0.1"
 
   name             = local.function_app_name
   location         = var.location

@@ -10,7 +10,7 @@ locals {
 }
 
 module "linux_vm" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/linux-virtual-machine?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/linux-virtual-machine?ref=0.1"
 
   name     = var.name
   location = var.location

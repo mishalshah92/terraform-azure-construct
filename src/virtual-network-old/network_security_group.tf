@@ -19,7 +19,7 @@ locals {
 }
 
 module "network-security-group" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-security-group?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/network-security-group?ref=0.1"
 
   count = length(var.subnet_address_spaces)
 

@@ -1,5 +1,5 @@
 module "aks_cluster" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/aks?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/aks?ref=0.1"
 
   name       = var.name
   dns_prefix = var.dns_prefix == null ? var.name : var.dns_prefix

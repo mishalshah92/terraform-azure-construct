@@ -1,5 +1,5 @@
 module "aks_nodepool" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/aks-nodepool?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/aks-nodepool?ref=0.1"
 
   name = var.name
 

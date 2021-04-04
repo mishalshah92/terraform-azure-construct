@@ -4,7 +4,7 @@ locals {
 }
 
 module "gateway_subnet" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/subnet?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/subnet?ref=0.1"
 
   name                 = local.gateway_subnet_name
   resource_group       = var.resource_group
@@ -17,7 +17,7 @@ module "gateway_subnet" {
 }
 
 module "gateway_subnet_route_table" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/route-table?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/route-table?ref=0.1"
 
   name     = local.gateway_subnet_rt_name
   location = var.location

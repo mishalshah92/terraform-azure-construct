@@ -1,5 +1,5 @@
 module "vnet_storage_account" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/storage-account?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/storage-account?ref=0.1"
 
   name     = var.storage_acc_name == null ? replace("${var.resource_group}${var.name}sa", "-", "") : var.storage_acc_name
   location = data.azurerm_resource_group.resource_group.location

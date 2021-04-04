@@ -14,7 +14,7 @@ locals {
 }
 
 module "route-table" {
-  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/route-table?ref=master"
+  source = "git::https://github.com/mishah92/terraform-azure-modules.git//src/route-table?ref=0.1"
 
   count = length(var.subnet_address_spaces)
 
