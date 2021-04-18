@@ -41,7 +41,8 @@ variable "deployment" {
 }
 
 variable "module" {
-  type = string
+  type    = string
+  default = "resource-group"
 }
 
 variable "tags" {
