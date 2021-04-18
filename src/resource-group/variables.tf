@@ -1,10 +1,17 @@
+variable "name" {
+  type = string
+}
+
 variable "location" {
   type = string
 }
 
 variable "private_zone_postfix" {
-  type    = string
-  default = "internal.azure.dynamicdemand.ai"
+  type = string
+}
+
+variable "hub_resource_group" {
+  type = string
 }
 
 # Tags
@@ -25,10 +32,6 @@ variable "env" {
   type = string
 }
 
-variable "git_commit" {
-  type = string
-}
-
 variable "repo" {
   type = string
 }
@@ -39,15 +42,6 @@ variable "deployment" {
 
 variable "module" {
   type = string
-}
-
-variable "resource_group" {
-  type = string
-}
-
-variable "tool" {
-  description = "Automation tool info"
-  default     = "Managed by Terraform"
 }
 
 variable "tags" {

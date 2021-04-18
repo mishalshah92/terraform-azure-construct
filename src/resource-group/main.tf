@@ -1,28 +1,27 @@
 terraform {
-  required_version = "> 0.13"
-
-  backend "azurerm" {}
+  required_version = "> 0.15"
 }
 
 provider "azurerm" {
   features {}
 }
 
-locals {
+module "default" {
+  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//src/default?ref=add-tag-module"
 
-  resource_group_name = "${var.customer}-${var.env}"
+  hub_resource_group = var.hub_resource_group
 
-  default_tags = {
-    Customer      = var.customer
-    Owner         = var.owner
-    Env           = var.env
-    Email         = var.email
-    Repo          = var.repo
-    Tool          = var.tool
-    ResourceGroup = var.resource_group
-    Module        = var.module
-    Deployment    = var.deployment
-  }
+  # Tags
+  customer = var.customer
+  env      = var.env
 
-  tags = merge(local.default_tags, var.tags)
+  owner = var.owner
+  email = var.email
+
+  resource_group = var.name
+
+  deployment = var.deployment
+  module     = var.module
+
+  tags = var.tags
 }

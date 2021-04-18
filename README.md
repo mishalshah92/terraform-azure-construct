@@ -1,13 +1,13 @@
-# Terraform Azure Modules
+# Terraform Azure Deployments
 
-Terraform modules to deploy resources on deploy on Azure cloud with its possible configurations.
+Terraform Deployment modules that deploy resources on Azure cloud.
 These modules deploy bunch of resources with all required configurations considering monitoring, availability and reliability.    
 
-- **Terraform version** >= `0.14`
+- **Terraform version** >= `0.15.0`
 
-## Base Modules
+## Modules
 
-- [terraform-azure-base-modules](https://github.com/cloudops92/terraform-azure-base-modules)
+- [terraform-azure-modules](https://github.com/cloudops92/terraform-azure-modules)
   
 ## Modules
 
