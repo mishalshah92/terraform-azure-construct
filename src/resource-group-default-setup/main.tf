@@ -21,6 +21,6 @@ module "tags" {
   owner          = var.owner
   email          = var.email
   resource_group = var.resource_group
-  module         = "resource-group-default-setup"
+  module         = var.module
   tags           = var.tags
 }

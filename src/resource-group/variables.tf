@@ -24,6 +24,10 @@ variable "env" {
   type = string
 }
 
+variable "module" {
+  type = string
+}
+
 variable "deployment" {
   type = string
 }
