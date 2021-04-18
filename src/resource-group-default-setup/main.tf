@@ -6,6 +6,12 @@ provider "azurerm" {
   features {}
 }
 
+module "default" {
+  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//src/default?ref=add-tag-module"
+
+  hub_resource_group = var.hub_resource_group
+}
+
 module "tags" {
   source = "git::https://github.com/cloudops92/terraform-azure-modules.git//src/tags?ref=add-tag-module"
 
@@ -14,7 +20,7 @@ module "tags" {
   deployment     = var.deployment
   owner          = var.owner
   email          = var.email
-  resource_group = var.name
-  module         = "resource-group"
+  resource_group = var.resource_group
+  module         = "resource-group-default-setup"
   tags           = var.tags
 }

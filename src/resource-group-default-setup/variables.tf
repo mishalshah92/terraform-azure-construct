@@ -1,8 +1,16 @@
-variable "name" {
+variable "resource_group" {
   type = string
 }
 
 variable "location" {
+  type = string
+}
+
+variable "private_zone_postfix" {
+  type = string
+}
+
+variable "hub_resource_group" {
   type = string
 }
 
