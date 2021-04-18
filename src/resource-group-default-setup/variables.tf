@@ -36,6 +36,10 @@ variable "module" {
   type = string
 }
 
+variable "repo" {
+  type = string
+}
+
 variable "deployment" {
   type = string
 }

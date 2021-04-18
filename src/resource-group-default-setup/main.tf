@@ -23,4 +23,5 @@ module "tags" {
   resource_group = var.resource_group
   module         = var.module
   tags           = var.tags
+  repo           = var.repo
 }

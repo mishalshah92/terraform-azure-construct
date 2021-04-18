@@ -21,5 +21,6 @@ module "tags" {
   email          = var.email
   resource_group = var.name
   module         = var.module
+  repo           = var.repo
   tags           = var.tags
 }
