@@ -32,10 +32,6 @@ variable "env" {
   type = string
 }
 
-variable "repo" {
-  type = string
-}
-
 variable "deployment" {
   type = string
 }
