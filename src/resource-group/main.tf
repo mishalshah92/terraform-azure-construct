@@ -18,6 +18,6 @@ module "default" {
   owner          = var.owner
   email          = var.email
   resource_group = var.name
-  module         = var.module
+  module         = "resource-group"
   tags           = var.tags
 }

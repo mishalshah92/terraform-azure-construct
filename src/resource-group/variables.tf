@@ -40,11 +40,6 @@ variable "deployment" {
   type = string
 }
 
-variable "module" {
-  type    = string
-  default = "resource-group"
-}
-
 variable "tags" {
   type    = map(string)
   default = {}
