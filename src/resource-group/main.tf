@@ -12,16 +12,12 @@ module "default" {
   hub_resource_group = var.hub_resource_group
 
   # Tags
-  customer = var.customer
-  env      = var.env
-
-  owner = var.owner
-  email = var.email
-
+  customer       = var.customer
+  env            = var.env
+  deployment     = var.deployment
+  owner          = var.owner
+  email          = var.email
   resource_group = var.name
-
-  deployment = var.deployment
-  module     = var.module
-
-  tags = var.tags
+  module         = var.module
+  tags           = var.tags
 }

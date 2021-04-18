@@ -4,4 +4,8 @@ resource "azurerm_network_watcher" "network_watcher" {
   resource_group_name = module.default.hub_rg.name
 
   tags = module.default.tags
+
+  depends_on = [
+    module.resource-group
+  ]
 }

@@ -4,5 +4,5 @@ module "resource-group" {
   name     = var.name
   location = var.location
 
-  tags = module.format_tags.tags
+  tags = module.default.tags
 }
