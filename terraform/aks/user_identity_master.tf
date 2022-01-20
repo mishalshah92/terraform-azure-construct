@@ -39,23 +39,23 @@ resource "azurerm_role_assignment" "aks_master_user_identity_net_contributor" {
   principal_id         = azurerm_user_assigned_identity.aks_master_user_identity.principal_id
 }
 
-resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_azure_dynamicdemand_ai" {
+resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_azure_test_com_ai" {
 
-  scope                = data.azurerm_dns_zone.azure_dynamicdemand_ai.id
+  scope                = data.azurerm_dns_zone.azure_test_com.id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_master_user_identity.principal_id
 }
 
-resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_tools_azure_dynamicdemand_ai" {
+resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_tools_azure_test_com" {
 
-  scope                = data.azurerm_dns_zone.tools_azure_dynamicdemand_ai.id
+  scope                = data.azurerm_dns_zone.tools_azure_test_com.id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_master_user_identity.principal_id
 }
 
-resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_res_azure_dynamicdemand_ai" {
+resource "azurerm_role_assignment" "aks_master_user_identity_dns_zone_contributor_res_azure_test_com" {
 
-  scope                = data.azurerm_dns_zone.res_azure_dynamicdemand_ai.id
+  scope                = data.azurerm_dns_zone.res_azure_test_com.id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_master_user_identity.principal_id
 }

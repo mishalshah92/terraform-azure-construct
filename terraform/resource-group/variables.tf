@@ -12,7 +12,7 @@ variable "location" {
 
 variable "private_zone_postfix" {
   type    = string
-  default = "internal.azure.dynamicdemand.ai"
+  default = "internal.azure.test.com"
 }
 
 # Tags

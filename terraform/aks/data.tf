@@ -36,23 +36,23 @@ data "azurerm_key_vault" "rg_keyvault" {
   name                = var.resource_group
 }
 
-data "azurerm_dns_zone" "tools_azure_dynamicdemand_ai" {
-  name                = "tools.azure.dynamicdemand.ai"
+data "azurerm_dns_zone" "tools_azure_test_com" {
+  name                = "tools.azure.test.com"
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_dns_zone" "res_azure_dynamicdemand_ai" {
-  name                = "res.azure.dynamicdemand.ai"
+data "azurerm_dns_zone" "res_azure_test_com" {
+  name                = "res.azure.test.com"
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_dns_zone" "azure_dynamicdemand_ai" {
-  name                = "azure.dynamicdemand.ai"
+data "azurerm_dns_zone" "azure_test_com" {
+  name                = "azure.test.com"
   resource_group_name = var.hub_rg
 }
 
 data "azurerm_private_dns_zone" "rg_private_dns_zone" {
-  name                = "${var.resource_group}.internal.azure.dynamicdemand.ai"
+  name                = "${var.resource_group}.internal.azure.test.com"
   resource_group_name = var.resource_group
 }
 
