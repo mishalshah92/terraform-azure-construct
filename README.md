@@ -24,9 +24,9 @@ If your team uses Azure and Terraform, this repo helps you:
 
 **Terraform version** >= `0.15.0`
 
-## Modules
+## Core Modules
 
-- [terraform-azure-core-modules](https://github.com/cloudops92/terraform-azure-core-modules)
+- [terraform-azure-core-modules](https://github.com/mishalshah92/terraform-azure-core-modules)
   
 ## Modules
 

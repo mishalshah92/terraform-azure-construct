@@ -10,7 +10,7 @@ MODULE:=NO_MODULE
 LOCATION:=NO_REGION
 DEPLOYMENT:=NO_DEPLOYMENT
 
-REPO:=https://github.com/cloudops92/terraform-azure-deployment-values
+REPO:=https://github.com/mishalshah92/terraform-azure-construct
 
 # Terraform Var files
 MODULE_PATH:=src/$(MODULE)
