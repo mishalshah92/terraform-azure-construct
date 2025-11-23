@@ -1,7 +1,26 @@
 # Terraform Azure Construct
 
-Terraform Deployment modules that deploy resources on Azure cloud.
-These modules deploy bunch of resources with all required configurations considering monitoring, availability and reliability.    
+`terraform-azure-construct` provides high-level, reusable Terraform “constructs” for Azure infrastructure.
+Built on top of foundational modules (e.g., those in terraform-azure-core-modules), this repo focuses on composing 
+common infrastructure patterns—such as a full landing-zone, network/security baseline, or application stack—into 
+easy-to-consume solution pack-ages.
+
+These constructs are opinionated yet configurable, enabling teams to deploy robust, consistent Azure architectures with 
+minimal duplicate effort.
+
+## Key Features
+- Pre-composed architecture patterns (virtual network + subnets + NSGs, landing zone, platform services, etc.)
+- Built using Terraform modules, assembled for production readiness
+- Configurable inputs and overrides for flexibility across environments
+- Enforces consistency in naming, tagging, and resource structure
+- Designed for speed of deployment while maintaining best-practice foundations
+
+## Why Use It?
+If your team uses Azure and Terraform, this repo helps you:
+- Deploy full infrastructure “stacks” rather than building every component from scratch
+- Leverage the module library (terraform-azure-core-modules) but stop reinventing composition logic
+- Achieve standardization across dev/test/prod environments
+- Enable rapid time-to-value while retaining extensibility
 
 - **Terraform version** >= `0.15.0`
 
@@ -169,10 +188,14 @@ sub   rsa2048 2019-01-07 [E] [expires: 2021-01-06]
 3. To unlock, execute `$ git-crypt unlock`
 4. To lock, execute `$ git-crypt lock`
 
-## Overview
+## Maintainer
 
-- **Maintainer**: mishalshah92@gmail.com
+Mishal Shah -- _mishalshah92@gmail.com_
 
+
+## Contribution
+Contributions are welcome! Whether it's adding new constructs, improving existing ones, or enhancing 
+documentation — please fork the repo, submit a pull request, and adhere to the existing structure and style.
 
 ## Releases
 
