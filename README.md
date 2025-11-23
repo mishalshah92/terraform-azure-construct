@@ -1,4 +1,4 @@
-# Terraform Azure Deployments
+# Terraform Azure Construct
 
 Terraform Deployment modules that deploy resources on Azure cloud.
 These modules deploy bunch of resources with all required configurations considering monitoring, availability and reliability.    
@@ -7,7 +7,7 @@ These modules deploy bunch of resources with all required configurations conside
 
 ## Modules
 
-- [terraform-azure-modules](https://github.com/cloudops92/terraform-azure-modules)
+- [terraform-azure-core-modules](https://github.com/cloudops92/terraform-azure-core-modules)
   
 ## Modules
 
@@ -21,6 +21,7 @@ These modules deploy bunch of resources with all required configurations conside
 - [alert-action-group](terraform/alert-action-group)
 - [app-gateway](terraform/app-gateway)
 - [cache-redis](terraform/cache-redis)
+- [chartmuseum](terraform/chartmuseum)
 - [container-registry](terraform/container-registry)
 - [cosmosdb-mongodb](terraform/cosmosdb-mongodb)
 - [database-server-mysql](terraform/database-server-mysql)
@@ -28,10 +29,20 @@ These modules deploy bunch of resources with all required configurations conside
 - [database-server-postgresql-replica](terraform/database-server-postgresql-replica)
 - [dns-zone-private](terraform/dns-zone-private)
 - [dns-zone-public](terraform/dns-zone-public)
+- [elk](terraform/elk)
+- [grafana](terraform/grafana)
+- [influxdb](terraform/influxdb)
+- [jenkins](terraform/jenkins)
 - [keyvault](terraform/keyvault)
 - [logic-app-integration-account](terraform/logic-app-integration-account)
+- [managed-identity](terraform/managed-identity)
+- [matomo](terraform/matomo)
+- [metabase](terraform/metabase)
+- [nexus](terraform/nexus)
+- [rancher](terraform/rancher)
 - [resource-group](terraform/resource-group)
 - [slack-notifier](terraform/slack-notifier)
+- [sonarqube](terraform/sonarqube)
 - [storage-account](terraform/storage-account)
 - [virtual-machine-linux](terraform/virtual-machine-linux)
 - [virtual-machine-placement-group](terraform/virtual-machine-placement-group)
@@ -61,7 +72,7 @@ Terraform directory hold the various modules code.
 
 ## Overview
 
-- **Maintainer**: mishalshah1992@gmail.com
+- **Maintainer**: mishalshah92@gmail.com
 
 
 ## Releases
