@@ -1,5 +1,5 @@
 module "vnet" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/virtual-network?ref=0.4"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/virtual-network?ref=0.4"
 
   name           = var.name
   location       = var.location

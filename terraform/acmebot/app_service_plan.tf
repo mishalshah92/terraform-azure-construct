@@ -1,5 +1,5 @@
 module "app_service_plan" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/app-service-plan?ref=0.5"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/app-service-plan?ref=0.5"
 
   name     = local.app_service_plan_name
   location = var.location

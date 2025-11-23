@@ -1,5 +1,5 @@
 module "linux_vm" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/linux-virtual-machine?ref=1.4"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/linux-virtual-machine?ref=1.4"
 
   name     = var.name
   location = var.location

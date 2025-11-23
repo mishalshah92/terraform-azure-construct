@@ -1,5 +1,5 @@
 module "resource-group" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/resource-group?ref=3.0"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/resource-group?ref=3.0"
 
   name     = local.resource_group_name
   location = var.location

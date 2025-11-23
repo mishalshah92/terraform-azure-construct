@@ -1,5 +1,5 @@
 module "postgresql-db" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/database-server-postgresql?ref=1.8"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/database-server-postgresql?ref=1.8"
 
   name     = local.name
   location = var.location

@@ -3,7 +3,7 @@ locals {
 }
 
 module "logic_app" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/logic-app-alert-notifier-slack?ref=2.4"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/logic-app-alert-notifier-slack?ref=2.4"
 
   name     = local.name
   location = var.location

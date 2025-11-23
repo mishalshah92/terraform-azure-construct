@@ -3,7 +3,7 @@ locals {
 }
 
 module "aks_cluster" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/aks?ref=0.2"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/aks?ref=0.2"
 
   name           = var.name
   location       = var.location

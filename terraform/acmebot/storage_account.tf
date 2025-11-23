@@ -1,5 +1,5 @@
 module "storage_account" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/storage-account?ref=0.5"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/storage-account?ref=0.5"
 
   name     = local.storage_account_name
   location = var.location

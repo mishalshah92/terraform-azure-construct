@@ -1,5 +1,5 @@
 module "nsg-flow-logs" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/network-watcher-flow-log?ref=3.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/network-watcher-flow-log?ref=3.3"
 
   for_each = module.subnet
 

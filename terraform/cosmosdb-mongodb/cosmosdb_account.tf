@@ -10,7 +10,7 @@ locals {
 }
 
 module "cosmosdb_account" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/cosmosdb-account?ref=1.8"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/cosmosdb-account?ref=1.8"
 
   name       = local.name
   location   = var.location

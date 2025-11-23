@@ -1,5 +1,5 @@
 module "gateway_subnet" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/subnet?ref=0.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/subnet?ref=0.3"
 
   name                 = "GatewaySubnet"
   resource_group       = var.resource_group

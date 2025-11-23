@@ -7,7 +7,7 @@ locals {
 }
 
 module "vnet_storage_account" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/storage-account?ref=0.2"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/storage-account?ref=0.2"
 
   name     = var.name
   location = var.location

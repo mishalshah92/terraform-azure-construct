@@ -1,5 +1,5 @@
 module "dns_zone_private" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/dns-zone-private?ref=0.9"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/dns-zone-private?ref=0.9"
 
   name = var.name
 

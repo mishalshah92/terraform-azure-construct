@@ -1,5 +1,5 @@
 module "vnet_storage_account" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/storage-account?ref=3.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/storage-account?ref=3.3"
 
   name     = replace("${var.name}sa", "-", "")
   location = var.location

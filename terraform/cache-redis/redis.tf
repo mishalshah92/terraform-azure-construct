@@ -1,5 +1,5 @@
 module "redis_cache" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//terraform/cache-redis?ref=1.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/cache-redis?ref=1.3"
 
   name     = local.name
   location = var.location
