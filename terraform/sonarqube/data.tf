@@ -1,21 +1,9 @@
 data "azurerm_subscription" "current" {}
 
-## Data source is having issue, check: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10503
-
-//data "azurerm_application_gateway" "service_app_gateway" {
-//  name                = var.app_gateway_name
-//  resource_group_name = var.resource_group
-//}
-
 ## Generic Resources
 
 data "azurerm_monitor_action_group" "slack_alert_action_group" {
   name                = var.alert_action_group_name
-  resource_group_name = var.hub_rg
-}
-
-data "azurerm_container_registry" "container_registry" {
-  name                = var.acr_login_server
   resource_group_name = var.hub_rg
 }
 
@@ -24,9 +12,9 @@ data "azurerm_key_vault" "rg_keyvault" {
   resource_group_name = var.resource_group
 }
 
-data "azurerm_key_vault" "devops_keyvault" {
-  name                = var.devops_key_vault
-  resource_group_name = var.devops_rg
+data "azurerm_container_registry" "container_registry" {
+  name                = var.acr_login_server
+  resource_group_name = var.hub_rg
 }
 
 ## VMSS
@@ -42,19 +30,30 @@ data "azurerm_subnet" "app_subnet" {
   resource_group_name  = var.resource_group
 }
 
+data "azurerm_key_vault" "devops_keyvault" {
+  name                = var.devops_key_vault
+  resource_group_name = var.devops_rg
+}
+
 data "azurerm_ssh_public_key" "ssh_key" {
   name                = "vm_${var.admin_username}"
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_storage_account" "chartmuseum_storage_account" {
-  name                = var.chart_museum_storage_account
-  resource_group_name = var.hub_rg
+
+data "azurerm_key_vault_secret" "db_secret" {
+  name         = var.keyvault_sonarqube_secret_name_prefix
+  key_vault_id = data.azurerm_key_vault.rg_keyvault.id
 }
 
 data "azurerm_key_vault_secret" "devops_keyvault_influxdb_token" {
   name         = var.telegraf_out_influxdb_token_secret_name
-  key_vault_id = data.azurerm_key_vault.rg_keyvault.id
+  key_vault_id = data.azurerm_key_vault.devops_keyvault.id
+}
+
+data "azurerm_storage_account" "sonarqube_storage_account" {
+  name                = var.sonarqube_storage_account
+  resource_group_name = var.resource_group
 }
 
 data "azurerm_key_vault_secret" "devops_keyvault_es_password" {
@@ -62,18 +61,22 @@ data "azurerm_key_vault_secret" "devops_keyvault_es_password" {
   key_vault_id = data.azurerm_key_vault.devops_keyvault.id
 }
 
-data "template_file" "dynamic_backend_service_docker_compose" {
-  template = file("${path.module}/configs/chart_museum.yml")
+data "template_file" "sonarqube_service_docker_compose" {
+  template = file("${path.module}/configs/sonarqube.yml")
 
   vars = {
-    port                        = var.chart_museum_service_port
-    tag                         = var.chart_museum_service_tag
-    acr_login_server            = var.acr_login_server
-    storage_microsoft_container = var.chart_museum_storage_container
-    azure_storage_account       = var.chart_museum_storage_account
-    azure_storage_access_key    = data.azurerm_storage_account.chartmuseum_storage_account.primary_access_key
 
-    # Filebeat
+    acr_login_server    = var.acr_login_server
+    sonarqube_tag       = var.sonarqube_tag
+    sonarqube_data_path = local.sonarqube_data_path
+    sonarqube_port      = var.sonarqube_service_port
+
+    # DB Config
+    db_username = var.sonarqube_database_username
+    db_password = data.azurerm_key_vault_secret.db_secret.value
+    db_host     = var.sonarqube_database_host
+    db_name     = var.sonarqube_database_name
+    #Filebeat
     filebeat_tag       = var.filebeat_tag
     es_hosts           = "[${var.es_host}]"
     es_username        = var.es_username
@@ -87,5 +90,5 @@ data "template_file" "dynamic_backend_service_docker_compose" {
     app_module         = var.module
     app_resource_group = var.resource_group
   }
-}
 
+}

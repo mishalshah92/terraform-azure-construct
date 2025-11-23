@@ -38,7 +38,7 @@ variable "vm_image_name" {
   type = string
 }
 
-# Storage
+## Storage
 
 variable "caching" {
   type = string

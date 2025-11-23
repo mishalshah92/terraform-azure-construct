@@ -3,7 +3,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.51.0"
+      version = "2.65.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "= 1.6.0"
     }
   }
 
@@ -17,11 +21,16 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
-locals {
+provider "azuread" {
+  tenant_id = var.tenant_id
+}
 
+locals {
   cloud                = "azure"
   name                 = "${var.module}-${var.resource_group}-${var.deployment}"
   computer_name_prefix = "${title(var.module)}${title(var.name)}"
+
+  grafana_data_path = "/grafana/${var.grafana_storage_account}/${local.name}"
 
   default_tags = {
     Name          = var.name

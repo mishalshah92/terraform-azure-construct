@@ -14,22 +14,22 @@ data "azurerm_monitor_action_group" "slack_alert_action_group" {
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_container_registry" "container_registry" {
-  name                = var.acr_login_server
-  resource_group_name = var.hub_rg
-}
-
 data "azurerm_key_vault" "rg_keyvault" {
   name                = var.resource_group
   resource_group_name = var.resource_group
 }
 
-data "azurerm_key_vault" "devops_keyvault" {
-  name                = var.devops_key_vault
-  resource_group_name = var.devops_rg
+data "azurerm_container_registry" "container_registry" {
+  name                = var.acr_login_server
+  resource_group_name = var.hub_rg
 }
 
-## VMSS
+data "azurerm_storage_share" "elk_file_share" {
+  name                 = local.name
+  storage_account_name = data.azurerm_storage_account.elasticsearch_storage_account.name
+}
+
+# VMSS
 
 data "azurerm_image" "app_image" {
   name                = var.vm_image_name
@@ -47,9 +47,9 @@ data "azurerm_ssh_public_key" "ssh_key" {
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_storage_account" "chartmuseum_storage_account" {
-  name                = var.chart_museum_storage_account
-  resource_group_name = var.hub_rg
+data "azurerm_storage_account" "elasticsearch_storage_account" {
+  name                = var.elasticsearch_storage_account
+  resource_group_name = var.resource_group
 }
 
 data "azurerm_key_vault_secret" "devops_keyvault_influxdb_token" {
@@ -57,23 +57,36 @@ data "azurerm_key_vault_secret" "devops_keyvault_influxdb_token" {
   key_vault_id = data.azurerm_key_vault.rg_keyvault.id
 }
 
+data "azurerm_key_vault" "devops_keyvault" {
+  name                = var.devops_key_vault
+  resource_group_name = var.devops_rg
+}
+
 data "azurerm_key_vault_secret" "devops_keyvault_es_password" {
   name         = var.es_password_keyvault_secret_name
   key_vault_id = data.azurerm_key_vault.devops_keyvault.id
 }
 
-data "template_file" "dynamic_backend_service_docker_compose" {
-  template = file("${path.module}/configs/chart_museum.yml")
+data "template_file" "elasticsearch_service_docker_compose" {
+  template = file("${path.module}/configs/elasticsearch.yml")
 
   vars = {
-    port                        = var.chart_museum_service_port
-    tag                         = var.chart_museum_service_tag
-    acr_login_server            = var.acr_login_server
-    storage_microsoft_container = var.chart_museum_storage_container
-    azure_storage_account       = var.chart_museum_storage_account
-    azure_storage_access_key    = data.azurerm_storage_account.chartmuseum_storage_account.primary_access_key
 
-    # Filebeat
+    acr_login_server = var.acr_login_server
+    # Elastic Search
+    cluster_name                   = "es-docker-cluster"
+    elasticsearch_port             = var.elasticsearch_service_port
+    elasticsearch_tag              = var.elasticsearch_service_tag
+    elasticsearch_password         = random_password.elasticsearch_password.result
+    elk_data_path                  = local.elk_data_path
+    elasticsearch_java_heap_memory = var.elasticsearch_java_heap_memory
+
+    # Kiabana
+    kibana_port = var.kibana_service_port
+    kibana_tag  = var.kibana_service_tag
+    kibana_host = var.kibana_host
+
+    #Filebeat
     filebeat_tag       = var.filebeat_tag
     es_hosts           = "[${var.es_host}]"
     es_username        = var.es_username
@@ -89,3 +102,11 @@ data "template_file" "dynamic_backend_service_docker_compose" {
   }
 }
 
+
+data "template_file" "elasticsearch_instances" {
+  template = file("${path.module}/configs/instances.yml")
+
+  vars = {
+    hostname = var.hostname
+  }
+}

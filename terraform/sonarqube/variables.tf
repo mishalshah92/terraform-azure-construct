@@ -38,7 +38,7 @@ variable "vm_image_name" {
   type = string
 }
 
-# Storage
+## Storage
 
 variable "caching" {
   type = string
@@ -103,6 +103,7 @@ variable "telegraf_out_influxdb_bucket" {
 }
 
 # Alerts notifications
+
 variable "enable_alerts" {
   type    = bool
   default = true

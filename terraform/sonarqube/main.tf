@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.51.0"
+      version = "2.59.0"
     }
   }
 
@@ -18,10 +18,11 @@ provider "azurerm" {
 }
 
 locals {
-
   cloud                = "azure"
   name                 = "${var.module}-${var.resource_group}-${var.deployment}"
   computer_name_prefix = "${title(var.module)}${title(var.name)}"
+
+  sonarqube_data_path = "/sonarqube/${var.sonarqube_storage_account}/${local.name}"
 
   default_tags = {
     Name          = var.name

@@ -1,27 +1,30 @@
-version: '3.9'
-
+version: "3.9"
 services:
-  chartmuseum:
-    container_name: chartmuseum
-    image: bitnami/chartmuseum:${tag}
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:${sonarqube_tag}
     restart: always
     labels:
-      service: chartmuseum
+      service: sonarqube
+    volumes:
+      - ${sonarqube_data_path}/opt/sonarqube/data:/opt/sonarqube/data
+      - ${sonarqube_data_path}/opt/sonarqube/extensions:/opt/sonarqube/extensions
+      - sonarqube_log_vol:/opt/sonarqube/logs
     environment:
-      - STORAGE=microsoft
-      - AZURE_STORAGE_ACCESS_KEY=${azure_storage_access_key}
-      - AZURE_STORAGE_ACCOUNT=${azure_storage_account}
-      - STORAGE_MICROSOFT_CONTAINER=${storage_microsoft_container}
+      - SONAR_JDBC_USERNAME=${db_username}
+      - SONAR_JDBC_PASSWORD=${db_password}
+      - SONAR_JDBC_URL=jdbc:postgresql://${db_host}:5432/${db_name}
+      - SONAR_SEARCH_JAVAADDITIONALOPTS=-Dlog4j2.formatMsgNoLookups=true
     ports:
-      - "${port}:8080"
+      - ${sonarqube_port}:9000
 
   filebeat:
     container_name: filebeat
     image: ${acr_login_server}.azurecr.io/filebeat:${filebeat_tag}
-    user: root
     restart: always
+    user: root
     labels:
-      service: filebeat
+      service: filebeat 
     volumes:
       - filebeat_vol:/var/log
       - /var/lib/docker:/var/lib/docker:ro
@@ -41,5 +44,7 @@ services:
       - APP_RESOURCE_GROUP=${app_resource_group}
 
 volumes:
+  sonarqube_log_vol:
+    driver: local
   filebeat_vol:
     driver: local

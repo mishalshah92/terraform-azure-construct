@@ -1,0 +1,115 @@
+version: '3.9'
+
+services:
+
+  jenkins-master:
+    container_name: jenkins-master
+    image: ${acr_login_server}.azurecr.io/jenkins-master-azure:${tag}
+    restart: always
+    labels:
+      service: jenkins-master
+    volumes:
+      - ${jenkins_data_path}/master/jenkins-home/secrets:/var/jenkins_home/secrets
+      - ${jenkins_data_path}/master/jenkins-home/jobs:/var/jenkins_home/jobs
+      - ${jenkins_data_path}/master/jenkins-home/nodes:/var/jenkins_home/nodes
+      - ${jenkins_data_path}/master/jenkins-home/userContent:/var/jenkins_home/userContent
+      - ${jenkins_data_path}/master/jenkins-home/users:/var/jenkins_home/users
+      - ${jenkins_data_path}/master/jenkins-home/workspace:/var/jenkins_home/workspace
+      - ${jenkins_data_path}/master/jenkins-home/workflow-libs:/var/jenkins_home/workflow-libs
+      - ${jenkins_data_path}/credentials:/var/jenkins_data/credentials
+    environment:
+      - JENKINS_URL=${jenkins_master_url}
+      - ADMIN_EMAIL=${jenkins_master_admin_email}
+      - JENKINS_STORAGE_ACCOUNT=${jenkins_master_storage_account}
+      - JENKINS_EXECUTORS=${jenkins_executors}
+      - KEY_VAULT_URL=${jenkins_master_key_vault_url}
+      - DEFAULT_AZURE_SUBSCRIPTION_ID=${jenkins_master_default_azure_subscription_id}
+      - METRICS_ACCESS_KEY=${jenkins_master_metrics_key}
+      - JIRA_SITE_URL=${jira_site_url}
+      - JIRA_SITE_CLIENT_ID=${jira_site_client_id}
+      - JIRA_SITE_CREDENTIAL_ID=${jira_site_credential_id}
+      - JENKINS_GIT_USERNAME=${jenkins_git_username}
+      - JENKINS_GIT_PRIVATE_KEY_PATH=${jenkins_git_private_key_path}
+      - JENKINS_WORKER_USERNAME=${jenkins_worker_username}
+      - JENKINS_WORKER_PASSWORD=${jenkins_worker_password}
+      - AZURE_DIRECTORY_TENANT_ID=${jenkins_master_azure_directory_tenant_id}
+      - AZURE_DIRECTORY_APP_CLIENT_ID=${jenkins_master_azure_directory_app_client_id}
+      - AZURE_DIRECTORY_APP_CLIENT_SECRET=${jenkins_master_azure_directory_app_client_secret}
+      - AZURE_AD_GROUP_READ=${jenkins_master_azure_ad_group_read}
+      - AZURE_AD_GROUP_EXECUTOR=${jenkins_master_azure_ad_group_executor}
+      - AZURE_AD_GROUP_DEVELOPER=${jenkins_master_azure_ad_group_developer}
+      - AZURE_AD_GROUP_ADMIN=${jenkins_master_azure_ad_group_admin}
+      - JENKINS_WORKER_CLOUD_NAME=${jenkins_worker_cloud_name}
+      - JENKINS_WORKER_MAX=${jenkins_worker_max}
+      - JENKINS_WORKER_DEFAULT_LOCATION=${jenkins_worker_default_location}
+      - JENKINS_WORKER_DEFAULT_USER_MANAGED_IDENTITY_RESOURCE_ID=${jenkins_worker_default_USMI}
+      - JENKINS_WORKER_DEFAULT_VM_IMAGE_RESOURCE_ID=${jenkins_worker_default_vm_image_id}
+      - JENKINS_WORKER_DEFAULT_VM_SIZE=${jenkins_worker_default_vm_size}
+      - JENKINS_WORKER_DEFAULT_VM_DISK_SIZE=${jenkins_worker_default_vm_disk_size}
+      - JENKINS_WORKER_DEFAULT_VNET_RG=${jenkins_worker_default_vnet_rg}
+      - JENKINS_WORKER_DEFAULT_VNET_NAME=${jenkins_worker_default_vnet_name}
+      - JENKINS_WORKER_DEFAULT_SUBNET_NAME=${jenkins_worker_default_subnet_name}
+      - JENKINS_WORKER_DEFAULT_SUBNET_NSG_NAME=${jenkins_worker_default_subnet_nsg_name}
+      - JENKINS_WORKER_DEFAULT_NO_EXECUTORS=${jenkins_worker_default_no_executors}
+      - JENKINS_WORKER_MEDIUM_LOCATION=${jenkins_worker_medium_location}
+      - JENKINS_WORKER_MEDIUM_USER_MANAGED_IDENTITY_RESOURCE_ID=${jenkins_worker_medium_USMI}
+      - JENKINS_WORKER_MEDIUM_VM_IMAGE_RESOURCE_ID=${jenkins_worker_medium_vm_image_id}
+      - JENKINS_WORKER_MEDIUM_VM_SIZE=${jenkins_worker_medium_vm_size}
+      - JENKINS_WORKER_MEDIUM_VM_DISK_SIZE=${jenkins_worker_medium_vm_disk_size}
+      - JENKINS_WORKER_MEDIUM_VNET_RG=${jenkins_worker_medium_vnet_rg}
+      - JENKINS_WORKER_MEDIUM_VNET_NAME=${jenkins_worker_medium_vnet_name}
+      - JENKINS_WORKER_MEDIUM_SUBNET_NAME=${jenkins_worker_medium_subnet_name}
+      - JENKINS_WORKER_MEDIUM_SUBNET_NSG_NAME=${jenkins_worker_medium_subnet_nsg_name}
+      - JENKINS_WORKER_MEDIUM_NO_EXECUTORS=${jenkins_worker_medium_no_executors}
+      - JENKINS_WORKER_LARGE_LOCATION=${jenkins_worker_large_location}
+      - JENKINS_WORKER_LARGE_USER_MANAGED_IDENTITY_RESOURCE_ID=${jenkins_worker_large_USMI}
+      - JENKINS_WORKER_LARGE_VM_IMAGE_RESOURCE_ID=${jenkins_worker_large_vm_image_id}
+      - JENKINS_WORKER_LARGE_VM_SIZE=${jenkins_worker_large_vm_size}
+      - JENKINS_WORKER_LARGE_VM_DISK_SIZE=${jenkins_worker_large_vm_disk_size}
+      - JENKINS_WORKER_LARGE_VNET_RG=${jenkins_worker_large_vnet_rg}
+      - JENKINS_WORKER_LARGE_VNET_NAME=${jenkins_worker_large_vnet_name}
+      - JENKINS_WORKER_LARGE_SUBNET_NAME=${jenkins_worker_large_subnet_name}
+      - JENKINS_WORKER_LARGE_SUBNET_NSG_NAME=${jenkins_worker_large_subnet_nsg_name}
+      - JENKINS_WORKER_LARGE_NO_EXECUTORS=${jenkins_worker_large_no_executors}
+      - CUSTOMER=${customer}
+      - ENV=${env}
+      - DEPLOYMENT=${deployment}
+      - RESOURCE_GROUP=${resource_group}
+      - OWNER=${owner}
+      - EMAIL=${email}
+      - REPO=${repo}
+      - MODULE=${module}
+      - VANTA_NON_PROD=${vanta_non_prod}
+      - VANTA_DESCRIPTION=${vanta_description}
+    ports:
+      - ${port}:${port}
+      - 5000:5000
+
+  filebeat:
+    container_name: filebeat
+    image: ${acr_login_server}.azurecr.io/filebeat:${filebeat_tag}
+    user: root
+    restart: always
+    labels:
+      service: filebeat
+    volumes:
+      - filebeat_vol:/var/log
+      - /var/lib/docker:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log/cloud-init-output.log:/var/log/hostlogs/cloud-init/cloud-init-output.log
+    environment:
+      - ES_HOSTS=${es_hosts}
+      - ES_USERNAME=${es_username}
+      - ES_PASSWORD=${es_password}
+      - APP_CUSTOMER=${app_customer}
+      - APP_OWNER=${app_owner}
+      - APP_EMAIL=${app_email}
+      - APP_ENV=${app_env}
+      - APP_DEPLOYMENT=${app_deployment}
+      - APP_REPO=${app_repo}
+      - APP_MODULE=${app_module}
+      - APP_RESOURCE_GROUP=${app_resource_group}
+
+volumes:
+  filebeat_vol:
+    driver: local

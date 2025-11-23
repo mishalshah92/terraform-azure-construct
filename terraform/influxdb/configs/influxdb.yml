@@ -1,19 +1,15 @@
-version: '3.9'
-
+version: "3.9"
 services:
-  chartmuseum:
-    container_name: chartmuseum
-    image: bitnami/chartmuseum:${tag}
+  influxdb:
+    container_name: influxdb
+    image: influxdb:${influxdb_tag}
     restart: always
     labels:
-      service: chartmuseum
-    environment:
-      - STORAGE=microsoft
-      - AZURE_STORAGE_ACCESS_KEY=${azure_storage_access_key}
-      - AZURE_STORAGE_ACCOUNT=${azure_storage_account}
-      - STORAGE_MICROSOFT_CONTAINER=${storage_microsoft_container}
+      service: influxdb
+    volumes:
+      - ${influxdb_data_path}:/var/lib/influxdb2
     ports:
-      - "${port}:8080"
+      - ${influxdb_port}:8086
 
   filebeat:
     container_name: filebeat
@@ -21,7 +17,7 @@ services:
     user: root
     restart: always
     labels:
-      service: filebeat
+      service: filebeat 
     volumes:
       - filebeat_vol:/var/log
       - /var/lib/docker:/var/lib/docker:ro

@@ -1,24 +1,35 @@
 version: '3.9'
 
+# https://matomo.org/faq/how-to-install/faq_98/ Help will fix the issue of proxy.
+
 services:
-  chartmuseum:
-    container_name: chartmuseum
-    image: bitnami/chartmuseum:${tag}
+
+  matomo:
+    container_name: matomo
+    image: bitnami/matomo:${matomo_tag}
     restart: always
+    user: "0:0"
     labels:
-      service: chartmuseum
+      service: matomo
+    volumes:
+      - matomo_log_vol:/var/www/html/logs
+      - ${matomo_data_path}/var/www/html:/var/www/html
     environment:
-      - STORAGE=microsoft
-      - AZURE_STORAGE_ACCESS_KEY=${azure_storage_access_key}
-      - AZURE_STORAGE_ACCOUNT=${azure_storage_account}
-      - STORAGE_MICROSOFT_CONTAINER=${storage_microsoft_container}
+      - MATOMO_HOST=${matomo_host}
+      - MATOMO_DATABASE_HOST=${db_host}
+      - MATOMO_DATABASE_PORT_NUMBER=3306
+      - MATOMO_DATABASE_NAME=${db_dbname}
+      - MATOMO_DATABASE_USER=${db_username}
+      - MATOMO_DATABASE_PASSWORD=${db_password}
     ports:
-      - "${port}:8080"
+      - ${matomo_port}:8080
 
   filebeat:
     container_name: filebeat
     image: ${acr_login_server}.azurecr.io/filebeat:${filebeat_tag}
     user: root
+    stdin_open: true
+    tty: true
     restart: always
     labels:
       service: filebeat
@@ -27,6 +38,7 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/log/cloud-init-output.log:/var/log/hostlogs/cloud-init/cloud-init-output.log
+      - matomo_log_vol:/var/log/filelogs/matomo
     environment:
       - ES_HOSTS=${es_hosts}
       - ES_USERNAME=${es_username}
@@ -42,4 +54,6 @@ services:
 
 volumes:
   filebeat_vol:
+    driver: local
+  matomo_log_vol:
     driver: local

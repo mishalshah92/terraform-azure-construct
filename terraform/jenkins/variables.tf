@@ -38,7 +38,7 @@ variable "vm_image_name" {
   type = string
 }
 
-# Storage
+## Storage
 
 variable "caching" {
   type = string
@@ -72,6 +72,10 @@ variable "zones" {
 
 variable "single_placement_group" {
   type = bool
+}
+
+variable "hostname" {
+  type = string
 }
 
 ## OS

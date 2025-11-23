@@ -1,21 +1,9 @@
 data "azurerm_subscription" "current" {}
 
-## Data source is having issue, check: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10503
-
-//data "azurerm_application_gateway" "service_app_gateway" {
-//  name                = var.app_gateway_name
-//  resource_group_name = var.resource_group
-//}
-
 ## Generic Resources
 
 data "azurerm_monitor_action_group" "slack_alert_action_group" {
   name                = var.alert_action_group_name
-  resource_group_name = var.hub_rg
-}
-
-data "azurerm_container_registry" "container_registry" {
-  name                = var.acr_login_server
   resource_group_name = var.hub_rg
 }
 
@@ -24,12 +12,17 @@ data "azurerm_key_vault" "rg_keyvault" {
   resource_group_name = var.resource_group
 }
 
-data "azurerm_key_vault" "devops_keyvault" {
-  name                = var.devops_key_vault
-  resource_group_name = var.devops_rg
+data "azurerm_container_registry" "container_registry" {
+  name                = var.acr_login_server
+  resource_group_name = var.hub_rg
 }
 
 ## VMSS
+
+data "azurerm_storage_account" "metabase_storage_account" {
+  name                = var.metabase_storage_account
+  resource_group_name = var.resource_group
+}
 
 data "azurerm_image" "app_image" {
   name                = var.vm_image_name
@@ -42,19 +35,24 @@ data "azurerm_subnet" "app_subnet" {
   resource_group_name  = var.resource_group
 }
 
+data "azurerm_key_vault" "devops_keyvault" {
+  name                = var.devops_key_vault
+  resource_group_name = var.devops_rg
+}
+
 data "azurerm_ssh_public_key" "ssh_key" {
   name                = "vm_${var.admin_username}"
   resource_group_name = var.hub_rg
 }
 
-data "azurerm_storage_account" "chartmuseum_storage_account" {
-  name                = var.chart_museum_storage_account
-  resource_group_name = var.hub_rg
+data "azurerm_key_vault_secret" "db_secret" {
+  name         = var.keyvault_metabase_secret_name_prefix
+  key_vault_id = data.azurerm_key_vault.rg_keyvault.id
 }
 
 data "azurerm_key_vault_secret" "devops_keyvault_influxdb_token" {
   name         = var.telegraf_out_influxdb_token_secret_name
-  key_vault_id = data.azurerm_key_vault.rg_keyvault.id
+  key_vault_id = data.azurerm_key_vault.devops_keyvault.id
 }
 
 data "azurerm_key_vault_secret" "devops_keyvault_es_password" {
@@ -62,16 +60,23 @@ data "azurerm_key_vault_secret" "devops_keyvault_es_password" {
   key_vault_id = data.azurerm_key_vault.devops_keyvault.id
 }
 
-data "template_file" "dynamic_backend_service_docker_compose" {
-  template = file("${path.module}/configs/chart_museum.yml")
+data "template_file" "metabase_service_docker_compose" {
+  template = file("${path.module}/configs/metabase.yml")
 
   vars = {
-    port                        = var.chart_museum_service_port
-    tag                         = var.chart_museum_service_tag
-    acr_login_server            = var.acr_login_server
-    storage_microsoft_container = var.chart_museum_storage_container
-    azure_storage_account       = var.chart_museum_storage_account
-    azure_storage_access_key    = data.azurerm_storage_account.chartmuseum_storage_account.primary_access_key
+
+    acr_login_server = var.acr_login_server
+
+    # metabase
+    metabase_tag       = var.metabase_tag
+    metabase_port      = var.metabase_service_port
+    metabase_data_path = local.metabase_data_path
+
+    ## DB Config
+    metabase_db_host     = var.metabase_database_host
+    metabase_db_name     = var.metabase_database_name
+    metabase_db_user     = var.metabase_database_username
+    metabase_db_password = data.azurerm_key_vault_secret.db_secret.value
 
     # Filebeat
     filebeat_tag       = var.filebeat_tag
@@ -87,5 +92,5 @@ data "template_file" "dynamic_backend_service_docker_compose" {
     app_module         = var.module
     app_resource_group = var.resource_group
   }
-}
 
+}

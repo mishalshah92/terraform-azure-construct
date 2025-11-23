@@ -32,24 +32,10 @@ variable "devops_key_vault" {
   type = string
 }
 
-# VMSS
+# VM
 
 variable "vm_image_name" {
   type = string
-}
-
-# Storage
-
-variable "caching" {
-  type = string
-}
-
-variable "storage_account_type" {
-  type = string
-}
-
-variable "disk_size_gb" {
-  type = number
 }
 
 ## Networking
@@ -62,16 +48,18 @@ variable "subnet_name" {
   type = string
 }
 
-variable "zone_balance" {
-  type = bool
-}
-
 variable "zones" {
   type = list(any)
 }
 
-variable "single_placement_group" {
-  type = bool
+variable "private_ip_address_allocation" {
+  type    = string
+  default = "Dynamic"
+}
+
+variable "private_ip_address" {
+  type    = string
+  default = null
 }
 
 ## OS

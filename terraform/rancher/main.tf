@@ -3,7 +3,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.51.0"
+      version = "2.80.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.6.0"
     }
   }
 
@@ -18,7 +22,6 @@ provider "azurerm" {
 }
 
 locals {
-
   cloud                = "azure"
   name                 = "${var.module}-${var.resource_group}-${var.deployment}"
   computer_name_prefix = "${title(var.module)}${title(var.name)}"

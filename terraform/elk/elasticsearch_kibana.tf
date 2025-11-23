@@ -4,24 +4,24 @@ locals {
 
 # Virtual machine scale-set
 
-module "vm_scaleset" {
+module "elasticsearch_kibana_vm_scaleset" {
   source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/linux-virtual-machine-scaleset?ref=0.3"
 
-  name                           = local.name
+  name                           = "${local.name}_elasticsearch"
   computer_name_prefix           = local.computer_name_prefix
   location                       = var.location
   terminate_notification_timeout = 0
 
   # Scaling
-  number_of_instances    = var.chart_museum_min_instances
-  vm_type                = var.chart_museum_vm_type
-  overprovision          = var.chart_museum_scale_overprovision
-  priority               = var.chart_museum_priority
+  number_of_instances    = var.elasticsearch_kibana_min_instances
+  vm_type                = var.elasticsearch_kibana_vm_type
+  overprovision          = var.elasticsearch_kibana_scale_overprovision
+  priority               = var.elasticsearch_kibana_priority
   provision_vm_agent     = true
   single_placement_group = var.single_placement_group
   zone_balance           = var.zone_balance
   zones                  = var.zones
-  scale_in_policy        = var.chart_museum_scale_in_policy
+  scale_in_policy        = var.elasticsearch_kibana_scale_in_policy
 
   # Networking
   network_interfaces = [
@@ -44,40 +44,28 @@ module "vm_scaleset" {
   # Identity
   identity_type = "UserAssigned"
   identity_ids = [
-    azurerm_user_assigned_identity.vmss_user_identity.id,
+    azurerm_user_assigned_identity.elasticsearch_kibana_vmss_user_identity.id,
   ]
 
   # OS
   source_image_id = data.azurerm_image.app_image.id
   admin_username  = var.admin_username
+
   admin_ssh_keys = [
     {
       username   = var.admin_username
       public_key = data.azurerm_ssh_public_key.ssh_key.public_key
     }
   ]
-  base64_encoded_custom_data = module.cloud_init.cloud_init_base64_encoded
+  base64_encoded_custom_data = module.elasticsearch_kibana_cloud_init.cloud_init_base64_encoded
 
   # Disk
   caching              = var.caching
   storage_account_type = var.storage_account_type
   disk_size_gb         = var.disk_size_gb
 
-  # extension
-  extensions = [
-    {
-      name                       = "HealthExtension"
-      publisher                  = "Microsoft.ManagedServices"
-      type                       = "ApplicationHealthLinux"
-      type_handler_version       = "1.0"
-      auto_upgrade_minor_version = "true"
-      settings = jsonencode({
-        "protocol"    = var.chart_museum_health_check_protocol
-        "port"        = var.chart_museum_service_port,
-        "requestPath" = var.chart_museum_health_check_path
-      })
-    }
-  ]
+  # Data Disk
+  data_disk = var.elasticsearch_data_disk
 
   # Upgrade
   upgrade_mode = "Manual"
@@ -92,4 +80,8 @@ module "vm_scaleset" {
   deployment     = var.deployment
   module         = var.module
   resource_group = var.resource_group
+
+  depends_on = [
+    azurerm_storage_share_file.elasticsearch_instances
+  ]
 }

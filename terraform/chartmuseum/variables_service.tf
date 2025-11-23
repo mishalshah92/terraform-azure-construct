@@ -1,5 +1,3 @@
-# Env
-
 variable "chart_museum_storage_account" {
   type = string
 }
@@ -9,6 +7,14 @@ variable "chart_museum_storage_container" {
 }
 
 # Service Config
+
+variable "app_gateway_name" {
+  type = string
+}
+
+variable "app_gateway_backend_pool_name" {
+  type = string
+}
 
 variable "chart_museum_service_port" {
   type = number

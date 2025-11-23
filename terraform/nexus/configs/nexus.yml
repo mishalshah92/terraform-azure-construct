@@ -1,19 +1,17 @@
-version: '3.9'
-
+version: "3.9"
 services:
-  chartmuseum:
-    container_name: chartmuseum
-    image: bitnami/chartmuseum:${tag}
+  nexus:
+    container_name: nexus
+    image: sonatype/nexus3:${nexus_tag}
     restart: always
+    user: root
     labels:
-      service: chartmuseum
-    environment:
-      - STORAGE=microsoft
-      - AZURE_STORAGE_ACCESS_KEY=${azure_storage_access_key}
-      - AZURE_STORAGE_ACCOUNT=${azure_storage_account}
-      - STORAGE_MICROSOFT_CONTAINER=${storage_microsoft_container}
+      service: nexus
+    volumes:
+      - ${nexus_data_path}:/nexus-data
+      - nexus_log_vol:/nexus-data/log
     ports:
-      - "${port}:8080"
+      - ${nexus_port}:8081
 
   filebeat:
     container_name: filebeat
@@ -21,12 +19,13 @@ services:
     user: root
     restart: always
     labels:
-      service: filebeat
+      service: filebeat 
     volumes:
       - filebeat_vol:/var/log
       - /var/lib/docker:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/log/cloud-init-output.log:/var/log/hostlogs/cloud-init/cloud-init-output.log
+      - nexus_log_vol:/var/log/filelogs/nexus
     environment:
       - ES_HOSTS=${es_hosts}
       - ES_USERNAME=${es_username}
@@ -41,5 +40,7 @@ services:
       - APP_RESOURCE_GROUP=${app_resource_group}
 
 volumes:
+  nexus_log_vol:
+    driver: local
   filebeat_vol:
     driver: local
