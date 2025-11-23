@@ -1,5 +1,5 @@
 module "container_registry" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/container-registry?ref=0.2"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/container-registry?ref=0.3"
 
   name                     = var.name
   location                 = var.location

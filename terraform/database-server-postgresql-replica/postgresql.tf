@@ -1,5 +1,5 @@
 module "postgresql-db-replica" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/database-server-postgresql?ref=1.8"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/database-server-postgresql?ref=0.3"
 
   name     = local.name
   location = var.location

@@ -10,7 +10,7 @@ locals {
 }
 
 module "key_vault" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/key-vault?ref=0.9"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/key-vault?ref=0.3"
 
   name     = var.name
   location = var.location

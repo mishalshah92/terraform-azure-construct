@@ -1,5 +1,5 @@
 module "cloud_init" {
-  source = "git::https://github.com/cloudops92/terraform-azure-core-modules.git//src/cloud-init-microservice?ref=master"
+  source = "git::https://github.com/cloudops92/terraform-azure-core-modules.git//terraform/cloud-init-microservice?ref=0.3"
 
   # Custom data Config
   azure_identity_login   = false
@@ -12,7 +12,7 @@ module "cloud_init" {
 }
 
 module "chartmuseum" {
-  source = "git::https://github.com/cloudops92/terraform-azure-microservice-modules.git//src/chartmuseum?ref=master"
+  source = "git::https://github.com/cloudops92/terraform-azure-microservice-modules.git//terraform/chartmuseum?ref=0.3"
 
   resource_group = var.resource_group
   location       = var.location

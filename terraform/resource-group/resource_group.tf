@@ -1,15 +1,8 @@
 module "resource-group" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/resource-group?ref=3.0"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/resource-group?ref=0.3"
 
-  name     = local.resource_group_name
+  name     = var.name
   location = var.location
 
-  customer   = var.customer
-  env        = var.env
-  owner      = var.owner
-  email      = var.email
-  repo       = var.repo
-  tags       = var.tags
-  deployment = var.deployment
-  module     = var.module
+  tags = module.tags.tags
 }

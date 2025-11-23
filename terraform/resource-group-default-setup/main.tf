@@ -7,13 +7,13 @@ provider "azurerm" {
 }
 
 module "default" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//src/default?ref=add-tag-module"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/default?ref=0.3"
 
   hub_resource_group = var.hub_resource_group
 }
 
 module "tags" {
-  source = "git::https://github.com/cloudops92/terraform-azure-modules.git//src/tags?ref=add-tag-module"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/tags?ref=0.3"
 
   customer       = var.customer
   env            = var.env

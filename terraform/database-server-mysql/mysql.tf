@@ -1,5 +1,5 @@
 module "mysql-db" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/database-server-mysql?ref=2.2"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/database-server-mysql?ref=0.3"
 
   name     = local.name
   location = var.location

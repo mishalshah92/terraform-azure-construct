@@ -12,7 +12,7 @@ resource "azurerm_public_ip_prefix" "aks_node_pool" {
 }
 
 module "aks_node_pool" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/aks-nodepool?ref=3.2"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/aks-nodepool?ref=0.3"
 
   name = var.name
 

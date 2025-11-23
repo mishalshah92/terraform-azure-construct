@@ -1,5 +1,5 @@
 module "subnet" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/subnet-nsg?ref=3.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/subnet-nsg?ref=0.3"
 
   for_each = var.subnet_address_spaces
 

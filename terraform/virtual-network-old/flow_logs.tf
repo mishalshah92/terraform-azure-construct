@@ -1,5 +1,5 @@
 module "nsg-flow-logs" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/network-watcher-flow-log?ref=0.1"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/network-watcher-flow-log?ref=0.3"
 
   count = length(module.network-security-group)
 

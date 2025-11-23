@@ -1,37 +1,26 @@
 terraform {
-  required_version = "> 0.13"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.81.0"
+      version = "2.56.0"
     }
   }
-
-  backend "azurerm" {}
 }
 
 provider "azurerm" {
   features {}
-
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
 }
 
-locals {
+module "tags" {
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/tags?ref=0.3"
 
-  resource_group_name = "${var.customer}-${var.env}"
-
-  default_tags = {
-    Customer      = var.customer
-    Owner         = var.owner
-    Env           = var.env
-    Email         = var.email
-    Repo          = var.repo
-    Tool          = var.tool
-    ResourceGroup = var.resource_group
-    Module        = var.module
-    Deployment    = var.deployment
-  }
-
-  tags = merge(local.default_tags, var.tags)
+  customer       = var.customer
+  env            = var.env
+  deployment     = var.deployment
+  owner          = var.owner
+  email          = var.email
+  resource_group = var.name
+  module         = var.module
+  repo           = var.repo
+  tags           = var.tags
 }
