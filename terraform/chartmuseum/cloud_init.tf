@@ -1,5 +1,5 @@
 module "cloud_init" {
-  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/cloud-init-microserviceref=0.3"
+  source = "git::https://github.com/mishalshah92/terraform-azure-core-modules.git//terraform/cloud-init-microservice?ref=0.3"
 
   # Custom data Config
   azure_identity_login = false
