@@ -88,7 +88,7 @@ Terraform directory hold the various modules code.
     `-- virtual_network.tf
 ```
 
-Values directory store the terraform values in path `module -> customer name -> aws_region -> {env}.tfvars`
+Values directory store the terraform values in path `account -> resource-group -> module -> location -> {deployment}.tfvars`
 
 ```
 values
