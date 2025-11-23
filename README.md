@@ -22,7 +22,7 @@ If your team uses Azure and Terraform, this repo helps you:
 - Achieve standardization across dev/test/prod environments
 - Enable rapid time-to-value while retaining extensibility
 
-- **Terraform version** >= `0.15.0`
+**Terraform version** >= `0.15.0`
 
 ## Modules
 
