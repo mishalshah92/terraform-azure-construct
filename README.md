@@ -69,6 +69,105 @@ Terraform directory hold the various modules code.
     `-- virtual_network.tf
 ```
 
+Values directory store the terraform values in path `module -> customer name -> aws_region -> {env}.tfvars`
+
+```
+values
+`-- ms-azure-account
+    `-- resource-group
+        `-- chartmuseum
+            |-- centralindia
+                `-- example.tfvars
+```
+
+## Terraform state info
+
+- ResourceGroupName: `myhub-rg`
+- StorageAccountName: `tfstate`
+- Environment: `public`
+- ContainerName: `terraform-azure-deployments`
+- STATE_PATH: `$(ACCOUNT)/$(RESOURCE_GROUP)/$(MODULE)/$(LOCATION)/$(DEPLOYMENT)/terraform.tfstate`
+
+## Make Targets
+
+With each `make` target below input is mandatory.
+
+- `ACCOUNT`: Name of the aws account.
+- `CUSTOMER`: Name of the customer.
+- `ENV`: Environment to deploy.
+- `Location`: Azure region/location.
+- `MODULE`: Name of the module to deploy.
+- `DEPLOYMENT`: Name of the deployment to deploy.
+- `RESOURCE_GROUP`: Name of the resource group.
+
+Make sure you have that environment following directory structure.
+
+### Targets
+
+- `$ make init`
+
+  Running `terraform init...` to initialize terraform.
+
+- `$ make validate`
+
+  Running `terraform validate...` to validate the Terraform syntax.
+
+- `$ make plan`
+
+  Running `terraform plan...` to print the plan.
+
+- `$ make plan-destroy`
+
+  Running `terraform plan -destroy...` to print the plan for removing resources.
+
+- `$ make apply`
+
+  Running `terraform apply...` to execute deployment.
+
+- `$ make apply-plan`
+
+  Running `terraform apply...` with plan.
+
+- `$ make destroy`
+
+  Running `terraform destroy` to destroy the deployment.
+
+### Examples
+
+```
+$ make init RG=myrg ACCOUNT=ms-azure CUSTOMER=customer ENV=example LOCATION=centralindia MODULE=chartmuseum DEPLOYMENT=example
+$ make validate RG=myrg ACCOUNT=ms-azure CUSTOMER=customer ENV=example LOCATION=centralindia MODULE=chartmuseum DEPLOYMENT=example
+$ make plan RG=myrg ACCOUNT=ms-azure CUSTOMER=customer ENV=example LOCATION=centralindia MODULE=chartmuseum DEPLOYMENT=example
+$ make apply RG=myrg ACCOUNT=ms-azure CUSTOMER=customer ENV=example LOCATION=centralindia MODULE=chartmuseum DEPLOYMENT=example
+$ make destroy RG=myrg ACCOUNT=ms-azure CUSTOMER=customer ENV=example LOCATION=centralindia MODULE=chartmuseum DEPLOYMENT=example
+```
+
+## How to init git-crypt?
+
+1. Execute `$ git-crypt init`.
+2. Add the `.gitattributes` file. Rule will work for child files and folders.
+3. Define the file-type to encrypt.
+    ```
+    *.crt filter=git-crypt diff=git-crypt
+    *.key filter=git-crypt diff=git-crypt
+    ```
+
+## How to add GPG user into git-crypt?
+
+1. Get the key `$ gpg --list-keys`
+
+```
+/Users/someuser/.gnupg/pubring.kbx
+----------------------------------
+pub rsa2048 2019-01-07 [SC] [expires: 2021-01-06]
+    D2B3EAAF9A8D5DB93CC30B26CCA243599CC80727B
+uid           [ultimate] Your Name <your@email.com>
+sub   rsa2048 2019-01-07 [E] [expires: 2021-01-06]
+```
+
+2. Add user `$ git-crypt add-gpg-user D2B3EAAF9A8D5DB93CC30B26CCA243599CC80727B`.
+3. To unlock, execute `$ git-crypt unlock`
+4. To lock, execute `$ git-crypt lock`
 
 ## Overview
 
