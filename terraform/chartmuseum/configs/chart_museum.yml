@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  dynamic_demand:
+    image: ${acr_login_server}.azurecr.io/chartmuseum:${tag}
+    environment:
+      - STORAGE=microsoft
+      - AZURE_STORAGE_ACCESS_KEY=${azure_storage_access_key}
+      - AZURE_STORAGE_ACCOUNT=${azure_storage_account}
+      - STORAGE_MICROSOFT_CONTAINER=${storage_microsoft_container}
+    ports:
+      - "${port}:8080"
